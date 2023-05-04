@@ -1,11 +1,4 @@
-import {
-  Email,
-  EmailOutlined,
-  LinkedIn,
-  LocationCity,
-  Phone,
-  PhoneAndroidOutlined,
-} from "@material-ui/icons";
+import { Email, EmailOutlined, LocationCity, Phone } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { medium, small } from "../responsive";
