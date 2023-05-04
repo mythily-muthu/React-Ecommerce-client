@@ -242,7 +242,7 @@ const Product = () => {
                 <ProductDesc>
                   <p style={{ color: "grey" }}>{product.description}</p>
                 </ProductDesc>
-                {shades.length > 1 && (
+                {/* {shades.length > 1 && (
                   <ShadesContainer>
                     {product.product_colors &&
                     product.product_colors.length > 0 ? (
@@ -272,7 +272,7 @@ const Product = () => {
                       <></>
                     )}
                   </ShadesContainer>
-                )}
+                )} */}
                 <CartContainer>
                   <QuantityContainer>
                     <Button

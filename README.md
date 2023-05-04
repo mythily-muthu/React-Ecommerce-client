@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# Fully Responsive Ecommerce App using React Redux.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+For preview [Click Here](https://mythu-ecommerce-app.netlify.app/).
 
-## Available Scripts
+## Features:
 
-In the project directory, you can run:
+In this ecommerce-Make You Up app: The users can make use of following features:
 
-### `npm start`
+- Initially, using credentials the user can easily register and login
+- Forgot password & reset password option enabled incase of necessity
+- In Explore page, users can have a view of all products
+- Users can filter their products by brands, price range and items
+- users can search the product using search tab in product list page
+- Able to add or delete items in the cart page
+- In product page, user can see complete detail of single product
+- User can see their order in order page
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# Pages
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Home page
+- Login Page
+- Register page
+- Forgot password page
+- Reset password page
+- Cart page
+- Product page
+- Product List page
+- Order page
 
-### `npm test`
+### Packages Used
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- "axios": "^0.24.0",
+- "bootstrap": "^5.1.3",
+- "formik": "^2.2.9",
+- "react": "^17.0.2",
+- "react-bootstrap": "^2.0.2",
+- "react-dom": "^17.0.2",
+- "react-redux": "^7.2.6",
+- "firebase": "^9.4.1",
+- "styled-components": "^5.3.3",
+- "react-router-dom": "^6.0.2",
+- "yup": "^0.32.11"
+- "multi-range-slider-react": "^1.0.5",
