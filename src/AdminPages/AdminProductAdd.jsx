@@ -97,7 +97,7 @@ export default function AdminProductAdd() {
     description: YUP.string().required("Please Enter description"),
     rating: YUP.number().required("Please Enter rating").min(1).max(5),
     product_type: YUP.string().required("Please Enter Product type"),
-    product_colors: YUP.string(),
+    image_link: YUP.string().required("Please Enter image url"),
   });
 
   // const handleImage = (product) => {
@@ -172,13 +172,14 @@ export default function AdminProductAdd() {
   // };
   const handleSubmit = async (Product) => {
     console.log(Product);
+    setLoading(true);
     const res = await publicRequest.post(`/product/`, Product, {
       headers: {
         token: user.currentUser.token,
       },
     });
 
-    if (res.status === 201) {
+    if (res.status === 200) {
       setInfo("Product Created Successfully");
       setLoading(false);
     } else {
@@ -259,17 +260,13 @@ export default function AdminProductAdd() {
                       </InputDiv>
                       <InputDiv className="form-group">
                         <Label> Upload Image </Label>
-                        <input
+                        <Input
                           style={{ height: "2rem" }}
                           type="text"
                           placeholder="Enter the image url"
                           className="form-control"
                           id="image_link"
                           name="image_link"
-                          // onChange={(e) => {
-                          //   set
-                          //   // setFile(e.target.files[0]);
-                          // }}
                         />
                         {/* {upload && (
                           <>

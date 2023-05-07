@@ -60,7 +60,7 @@ const AdminUserList = () => {
   const [info, setInfo] = useState("");
   const params = useParams();
   const Puser = useSelector((state) => state.user);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   //schema
   const signInSchema = YUP.object().shape({
