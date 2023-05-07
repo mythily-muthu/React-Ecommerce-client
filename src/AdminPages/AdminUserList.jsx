@@ -8,7 +8,6 @@ import Footer from "../components/Footer";
 import { DataGrid } from "@material-ui/data-grid";
 import { Link } from "react-router-dom";
 import { DeleteOutline, Edit } from "@material-ui/icons";
-import Loader from "react-loader-spinner";
 import { large } from "../responsive";
 import { publicRequest } from "../axiosMethod";
 import "./loading.css";
