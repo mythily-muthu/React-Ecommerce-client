@@ -203,13 +203,28 @@ const Login = () => {
                       <Para>New Here? Create Account</Para>
                     </Link>
                   </div>
-                  <div style={{ lineHeight: "3px", color: "grey" }}>
+                  <div
+                    style={{
+                      lineHeight: "3px",
+                      color: "grey",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "6px",
+                    }}
+                  >
                     <p>For Testing ,Please Use below credentials</p>
                     <p>
-                      <b>User</b>: test@gmail.com <b>Password</b>:test123
+                      <b>User</b>: test@gmail.com
                     </p>
                     <p>
-                      <b>Admin</b>: admin@gmail.com <b>Password</b>:admin123
+                      <b>Password</b>:test123
+                    </p>
+                    <p>
+                      <b>Admin</b>: testmythily@gmail.com
+                    </p>
+                    <p>
+                      <b>Password</b>
+                      :admin123
                     </p>
                   </div>
                 </Form>

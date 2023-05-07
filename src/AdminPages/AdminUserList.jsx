@@ -11,6 +11,7 @@ import { DeleteOutline, Edit } from "@material-ui/icons";
 import Loader from "react-loader-spinner";
 import { large } from "../responsive";
 import { publicRequest } from "../axiosMethod";
+import "./loading.css";
 
 const Maincontainer = styled.div`
   background-color: whitesmoke;
@@ -50,6 +51,7 @@ export default function AdminUserList() {
   const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
   console.log("user received in userlist", user);
+
   const getUsers = async () => {
     console.log("getting user ..");
     setLoading(true);
@@ -112,12 +114,15 @@ export default function AdminUserList() {
             <Link to={`/adminuseredit/${params.row._id}`}>
               <Edit />
             </Link>
-            <DeleteOutline
-              data-toggle="modal"
-              data-target="#deleteUser"
-              style={{ color: "red", cursor: "pointer", marginLeft: "15px" }}
-              onClick={() => deleteUser(params.row._id)}
-            />
+
+            {!params.row.isAdmin && (
+              <DeleteOutline
+                data-toggle="modal"
+                data-target="#deleteUser"
+                style={{ color: "red", cursor: "pointer", marginLeft: "15px" }}
+                onClick={() => deleteUser(params.row._id)}
+              />
+            )}
           </>
         );
       },
@@ -129,8 +134,14 @@ export default function AdminUserList() {
       <Maincontainer>
         <AdminNav />
         {loading ? (
-          <div className="d-flex justify-content-center m-5">
-            <Loader type="TailSpin" color="#25283D" height={100} width={100} />
+          <div
+            className="d-flex justify-content-center align-items-center "
+            style={{
+              height: "100vh",
+            }}
+          >
+            <div className="dot-overtaking"></div>
+            {/* <Loader type="TailSpin" color="#25283D" height={50} width={100} /> */}
           </div>
         ) : (
           <Container>
