@@ -12,7 +12,6 @@ import LowerAnnouncement from "../components/LowerAnnouncement";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import UpperAnnouncement from "../components/UpperAnnouncement";
-import { shades } from "../data";
 import { large, medium } from "../responsive";
 
 //styled comps
@@ -49,24 +48,7 @@ const ProductName = styled.div``;
 const ProductBrand = styled.div``;
 const ProductPrice = styled.div``;
 const ProductDesc = styled.div``;
-const ShadesContainer = styled.div``;
-const Shades = styled.div`
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-`;
-const ShadeSingle = styled.div`
-  height: 1.5rem;
-  width: 1.5rem;
-  background-color: ${(props) => props.hexValue};
-  border-radius: 50%;
-  border: 1px solid black;
-  cursor: pointer;
-  padding: 2px;
-  transform: ${(props) =>
-    props.shade === props.hexValue ? "scale(1.3)" : " "};
-  border-radius: ${(props) => (props.shade === props.hexValue ? "10%" : " ")};
-`;
+
 const CartContainer = styled.div`
   display: flex;
   justify-content: space-around;
@@ -125,6 +107,7 @@ const Product = () => {
   const dispatch = useDispatch();
   const [alert, setAlert] = useState(false);
   const [error, setError] = useState(false);
+  console.log(error, setShade);
 
   const getProduct = async (id) => {
     try {
@@ -142,11 +125,6 @@ const Product = () => {
   useEffect(() => {
     getProduct(id);
   }, [id]);
-
-  //handleshade
-  const handleShade = (value) => {
-    setShade(value);
-  };
 
   //inc or dec
   const handleQuantity = (value) => {
@@ -179,6 +157,8 @@ const Product = () => {
       setError(false);
     }
   };
+
+  console.log("error");
 
   return (
     <>
