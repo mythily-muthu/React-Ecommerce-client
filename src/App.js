@@ -17,6 +17,7 @@ import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
 import ResetPassword from "./pages/ResetPassword";
 import Success from "./pages/Success";
+import AdminProductAdd from "./AdminPages/AdminProductAdd";
 
 function App() {
   const user = false;
@@ -45,6 +46,7 @@ function App() {
           <Route path="/adminuserlist" element={<AdminUserList />} />
           <Route path="/adminuseredit/:id" element={<AdminUserEdit />} />
           <Route path="/adminuseradd" element={<AdminUserAdd />} />
+          <Route path="/adminproductadd" element={<AdminProductAdd />} />
         </Routes>
       </BrowserRouter>
     </>

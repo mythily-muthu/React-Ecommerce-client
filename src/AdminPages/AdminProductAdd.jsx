@@ -10,13 +10,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as YUP from "yup";
 import { Link } from "react-router-dom";
 import Loader from "react-loader-spinner";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
-import app from "../firebase";
+// import {
+//   getStorage,
+//   ref,
+//   uploadBytesResumable,
+//   getDownloadURL,
+// } from "firebase/storage";
 import { large, small } from "../responsive";
 import { publicRequest } from "../axiosMethod";
 
@@ -91,9 +90,6 @@ export default function AdminProductAdd() {
   const [info, setInfo] = useState("");
   const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
-  const [upload, setUpload] = useState(false);
-  const [file, setFile] = useState(null);
-  const [link, setLink] = useState("");
   const signInSchema = YUP.object().shape({
     name: YUP.string().required("Please Enter Product Name"),
     brand: YUP.string().required("Please Enter Brand"),
@@ -104,76 +100,91 @@ export default function AdminProductAdd() {
     product_colors: YUP.string(),
   });
 
-  const handleImage = (product) => {
-    setInfo("");
-    console.log(product);
-    setUpload(true);
-    setLoading(true);
-    console.log();
-    const storage = getStorage(app);
-    const storageRef = ref(storage, file.name);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    setUpload(true);
-    // Register three observers:
-    // 1. 'state_changed' observer, called any time the state changes
-    // 2. Error observer, called on failure
-    // 3. Completion observer, called on successful completion
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-        }
+  // const handleImage = (product) => {
+  //   setInfo("");
+  //   console.log(product);
+  //   setUpload(true);
+  //   setLoading(true);
+  //   // const storage = getStorage(app);
+  //   // const storageRef = ref(storage, file.name);
+  //   // const uploadTask = uploadBytesResumable(storageRef, file);
+  //   setUpload(true);
+  //   // Register three observers:
+  //   // 1. 'state_changed' observer, called any time the state changes
+  //   // 2. Error observer, called on failure
+  //   // 3. Completion observer, called on successful completion
+  //   // uploadTask.on(
+  //   //   "state_changed",
+  //   //   (snapshot) => {
+  //   //     // Observe state change events such as progress, pause, and resume
+  //   //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+  //   //     const progress =
+  //   //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //   //     console.log("Upload is " + progress + "% done");
+  //   //     switch (snapshot.state) {
+  //   //       case "paused":
+  //   //         console.log("Upload is paused");
+  //   //         break;
+  //   //       case "running":
+  //   //         console.log("Upload is running");
+  //   //         break;
+  //   //       default:
+  //   //     }
+  //   //   },
+  //   //   (error) => {
+  //   //     // Handle unsuccessful uploads
+  //   //   },
+  //   //   () => {
+  //   //     // Handle successful uploads on complete
+  //   //     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+  //   //     getDownloadURL(uploadTask.snapshot.ref)
+  //   //       .then((downloadURL) => {
+  //   //         console.log("File available at", downloadURL);
+  //   //         setUpload(false);
+  //   //         setLink(downloadURL);
+  //   //         console.log(typeof product.product_colors);
+  //   //         let colors = product.product_colors.split(",");
+  //   //         const Product = {
+  //   //           ...product,
+  //   //           image_link: downloadURL,
+  //   //           product_colors: colors,
+  //   //         };
+  //   //         console.log(Product);
+  //   //         const res = publicRequest.post(`/product/`, Product, {
+  //   //           headers: {
+  //   //             token: user.currentUser.token,
+  //   //           },
+  //   //         });
+  //   //         res.then((output) => {
+  //   //           console.log(output);
+  //   //           if (output.status === 201)
+  //   //             setInfo("Product Created Successfully");
+  //   //           setLoading(false);
+  //   //         });
+  //   //       })
+  //   //       .catch((err) => {
+  //   //         console.log(err);
+  //   //         setInfo("Oops Something went wrong");
+  //   //         setLoading(false);
+  //   //       });
+  //   //   }
+  //   // );
+  // };
+  const handleSubmit = async (Product) => {
+    console.log(Product);
+    const res = await publicRequest.post(`/product/`, Product, {
+      headers: {
+        token: user.currentUser.token,
       },
-      (error) => {
-        // Handle unsuccessful uploads
-      },
-      () => {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        getDownloadURL(uploadTask.snapshot.ref)
-          .then((downloadURL) => {
-            console.log("File available at", downloadURL);
-            setUpload(false);
-            setLink(downloadURL);
-            console.log(typeof product.product_colors);
-            let colors = product.product_colors.split(",");
-            const Product = {
-              ...product,
-              image_link: downloadURL,
-              product_colors: colors,
-            };
-            console.log(Product);
-            const res = publicRequest.post(`/product/`, Product, {
-              headers: {
-                token: user.currentUser.token,
-              },
-            });
-            res.then((output) => {
-              console.log(output);
-              if (output.status === 201)
-                setInfo("Product Created Successfully");
-              setLoading(false);
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            setInfo("Oops Something went wrong");
-            setLoading(false);
-          });
-      }
-    );
+    });
+
+    if (res.status === 201) {
+      setInfo("Product Created Successfully");
+      setLoading(false);
+    } else {
+      setInfo("Oops Something went wrong");
+      setLoading(false);
+    }
   };
   return (
     <>
@@ -193,15 +204,15 @@ export default function AdminProductAdd() {
                   brand: "",
                   price: 0,
                   description: "",
+                  image_link: "",
                   rating: 0,
                   product_type: "",
-                  product_colors: "",
                 }}
                 validationSchema={signInSchema}
                 onSubmit={async (values, { resetForm }) => {
-                  console.log(values, file);
-                  handleImage(values);
-                  resetForm();
+                  console.log(values);
+                  handleSubmit(values);
+                  // resetForm();
                 }}
               >
                 {() => {
@@ -250,15 +261,17 @@ export default function AdminProductAdd() {
                         <Label> Upload Image </Label>
                         <input
                           style={{ height: "2rem" }}
-                          type="file"
+                          type="text"
+                          placeholder="Enter the image url"
                           className="form-control"
                           id="image_link"
                           name="image_link"
-                          onChange={(e) => {
-                            setFile(e.target.files[0]);
-                          }}
+                          // onChange={(e) => {
+                          //   set
+                          //   // setFile(e.target.files[0]);
+                          // }}
                         />
-                        {upload && (
+                        {/* {upload && (
                           <>
                             <p
                               style={{
@@ -275,7 +288,7 @@ export default function AdminProductAdd() {
                               width={30}
                             />
                           </>
-                        )}
+                        )} */}
                         {/* <Error><ErrorMessage name="image_link"/></Error> */}
                       </InputDiv>
                       <InputDiv className="form-group">
@@ -321,19 +334,7 @@ export default function AdminProductAdd() {
                           <ErrorMessage name="product_type" />
                         </Error>
                       </InputDiv>
-                      <InputDiv className="form-group">
-                        <Label>Product Colors</Label>
-                        <Input
-                          type="text"
-                          placeholder="Enter color in HEX code"
-                          className="form-control"
-                          id="product_colors"
-                          name="product_colors"
-                        />
-                        <Error>
-                          <ErrorMessage name="product_colors" />
-                        </Error>
-                      </InputDiv>
+
                       <div
                         style={{ display: "flex", justifyContent: "center" }}
                       >

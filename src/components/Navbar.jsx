@@ -21,7 +21,7 @@ const NavContainer = styled.div`
   opacity: 0.9;
   z-index: 1;
 
-  color: #fff; ;
+  color: #fff;
 `;
 const Wrapper = styled.div`
   padding: 10px 20px;

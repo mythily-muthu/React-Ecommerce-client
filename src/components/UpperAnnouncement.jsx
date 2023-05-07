@@ -21,7 +21,7 @@ const UpperAnnouncement = () => {
     <div>
       <Container>
         <div style={{ marginTop: "10px" }}>
-          <p>NEW YEAR SALE!!! upto 50% OFF Hury...!</p>
+          <p>NEW YEAR SALE!!! upto 50% OFF Hurry...!</p>
         </div>
       </Container>
     </div>
