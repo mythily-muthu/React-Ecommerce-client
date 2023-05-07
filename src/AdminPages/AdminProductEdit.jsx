@@ -3,14 +3,12 @@ import * as YUP from "yup";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import AdminNav from "../AdminComponents/AdminNav";
-import { ScreenLockLandscapeSharp } from "@material-ui/icons";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import { large, small } from "../responsive";
 import { useSelector } from "react-redux";
 import { publicRequest } from "../axiosMethod";
-import { Image } from "react-bootstrap";
 import Loader from "react-loader-spinner";
 
 //styled comp
