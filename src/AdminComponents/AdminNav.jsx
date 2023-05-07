@@ -66,7 +66,7 @@ const AdminNav = () => {
           {user.currentUser && (
             <>
               <Item>
-                <p style={{ width: "5.5rem" }}>
+                <p style={{ textTransform: "capitalize" }}>
                   Hi,
                   {user.currentUser.username}
                 </p>

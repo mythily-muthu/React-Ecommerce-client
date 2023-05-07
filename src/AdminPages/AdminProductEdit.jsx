@@ -10,6 +10,8 @@ import Footer from "../components/Footer";
 import { large, small } from "../responsive";
 import { useSelector } from "react-redux";
 import { publicRequest } from "../axiosMethod";
+import { Image } from "react-bootstrap";
+import Loader from "react-loader-spinner";
 
 //styled comp
 const MainContainer = styled.div`
@@ -75,7 +77,8 @@ const AdminProductEdit = () => {
   const [info, setInfo] = useState("");
   const params = useParams();
   const user = useSelector((state) => state.user);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [updateButtonLoading, setUpdateButtonLoading] = useState(false);
 
   //yup schema
   const signInSchema = YUP.object().shape({
@@ -91,26 +94,19 @@ const AdminProductEdit = () => {
 
   useEffect(() => {
     const getProduct = async () => {
+      setLoading(true);
       try {
         const res = await publicRequest.get(`/product/find/${params.id}`);
         setProduct(res.data);
         setLoading(false);
       } catch (err) {
         console.log(err);
+        setLoading(false);
       }
     };
     getProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  if (!product.name) return [];
-  let colors;
-  if (product.product_colors.length > 1) {
-    colors = product.product_colors.map((a) => {
-      return a.hex_value;
-    });
-    console.log(product.product_colors, colors);
-  }
 
   return (
     <>
@@ -118,12 +114,7 @@ const AdminProductEdit = () => {
         <AdminNav />
         {loading ? (
           <div className="d-flex justify-content-center m-5">
-            <ScreenLockLandscapeSharp
-              type="TailSpin"
-              color="#25283D"
-              height={100}
-              width={100}
-            />
+            <Loader type="TailSpin" color="#25283D" height={100} width={100} />
           </div>
         ) : (
           <Container>
@@ -141,13 +132,13 @@ const AdminProductEdit = () => {
                     description: product.description,
                     rating: product.rating,
                     product_type: product.product_type,
-                    product_colors: colors || "",
                   }}
                   validationSchema={signInSchema}
                   onSubmit={async (values, { resetForm }) => {
                     console.log(values);
+                    setInfo("");
                     try {
-                      setLoading(true);
+                      setUpdateButtonLoading(true);
                       const res = await publicRequest.put(
                         `/product/${params.id}`,
                         values,
@@ -158,13 +149,13 @@ const AdminProductEdit = () => {
                         }
                       );
                       console.log(res);
-                      setLoading(false);
+                      setUpdateButtonLoading(false);
                       setInfo("product updated Successfully");
                       resetForm();
                     } catch (err) {
                       setInfo("Oops Something wet Wrong...!");
                       console.log(err);
-                      setLoading(false);
+                      setUpdateButtonLoading(false);
                     }
                   }}
                 >
@@ -223,6 +214,7 @@ const AdminProductEdit = () => {
                             <ErrorMessage name="image_link" />
                           </Error>
                         </InputDiv>
+
                         <InputDiv className="form-group">
                           <Label>Description</Label>
                           <TextArea
@@ -266,19 +258,20 @@ const AdminProductEdit = () => {
                             <ErrorMessage name="product_type" />
                           </Error>
                         </InputDiv>
-                        <InputDiv className="form-group">
-                          <Label>Product Colors</Label>
-                          <Input
-                            type="text"
-                            placeholder="Enter color in HEX code"
-                            className="form-control"
-                            id="product_colors"
-                            name="product_colors"
-                          />
-                          <Error>
-                            <ErrorMessage name="product_colors" />
-                          </Error>
-                        </InputDiv>
+                        <div
+                          style={{ display: "flex", justifyContent: "center" }}
+                        >
+                          {updateButtonLoading && (
+                            <>
+                              <Loader
+                                type="Bars"
+                                color="#adb4ec"
+                                height={30}
+                                width={30}
+                              />
+                            </>
+                          )}
+                        </div>
                         <div className="text-center">
                           <Button type="submit">Update</Button>
                         </div>

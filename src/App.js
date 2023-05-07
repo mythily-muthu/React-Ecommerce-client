@@ -18,9 +18,10 @@ import Register from "./pages/Register";
 import ResetPassword from "./pages/ResetPassword";
 import Success from "./pages/Success";
 import AdminProductAdd from "./AdminPages/AdminProductAdd";
+import { useSelector } from "react-redux";
 
 function App() {
-  const user = false;
+  const user = useSelector((state) => state.currentUser);
   return (
     <>
       <BrowserRouter>

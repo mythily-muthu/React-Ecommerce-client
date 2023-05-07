@@ -91,7 +91,6 @@ const Right = styled.div`
 ${small({ display: "none" })}
 `;
 const Item = styled.div`
-  margin-top: 10px;
   & > * {
     cursor: pointer;
     font-size: 1.12rem;
@@ -129,7 +128,6 @@ const Navbar = () => {
               style={{
                 display: "flex",
                 alignItems: "center",
-                lineHeight: "20%",
               }}
             >
               Make You Up
@@ -166,9 +164,16 @@ const Navbar = () => {
         <Right>
           {user.currentUser && (
             <>
-              <Item>
-                <p style={{ width: "5.5rem" }}>
-                  Hi,{user.currentUser.username}
+              <Item
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                Hi,{" "}
+                <p style={{ textTransform: "capitalize" }}>
+                  {" "}
+                  {user.currentUser.username}
                 </p>
               </Item>
             </>
@@ -236,8 +241,17 @@ const Navbar = () => {
       <SmallerDiv>
         {user.currentUser && (
           <>
-            <Item>
-              <p style={{ width: "5.5rem" }}>Hi, {user.currentUser.username}</p>
+            <Item
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              Hi,{" "}
+              <p style={{ textTransform: "capitalize" }}>
+                {" "}
+                {user.currentUser.username}
+              </p>
             </Item>
           </>
         )}

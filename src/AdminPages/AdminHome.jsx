@@ -6,7 +6,9 @@ import UserNum from "../AdminComponents/UserNum";
 
 //styled comp
 const MainContainer = styled.div``;
-const Container = styled.div``;
+const Container = styled.div`
+  padding: 16px;
+`;
 const MapContainer = styled.div``;
 const BottomCards = styled.div``;
 const UserCard = styled.div``;
