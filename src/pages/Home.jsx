@@ -26,6 +26,7 @@ const Home = () => {
         history("/adminHome");
       } else history("/");
     }
+    //eslint-disable-next-line
   }, []);
   return (
     <div>
