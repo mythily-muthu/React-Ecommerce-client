@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
 import UpperAnnouncement from "../components/UpperAnnouncement";
@@ -8,12 +8,25 @@ import Brands from "../components/Brands";
 import Items from "../components/Items";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
-
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const MainContainer = styled.div`
   background-color: whitesmoke;
 `;
 
 const Home = () => {
+  const user = useSelector((state) => state.user);
+  const history = useNavigate();
+
+  useEffect(() => {
+    if (user?.currentUser) {
+      // is admin or not ?
+      if (user?.currentUser?.isAdmin) {
+        console.log("in");
+        history("/adminHome");
+      } else history("/");
+    }
+  }, []);
   return (
     <div>
       <MainContainer>
