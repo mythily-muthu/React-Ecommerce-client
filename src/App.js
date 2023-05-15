@@ -21,7 +21,7 @@ import AdminProductAdd from "./AdminPages/AdminProductAdd";
 import { useSelector } from "react-redux";
 
 function App() {
-  const user = useSelector((state) => state.currentUser);
+  const user = useSelector((state) => state.user.currentUser);
   return (
     <>
       <BrowserRouter>

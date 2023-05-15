@@ -1,12 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import background from "../assets/login/login.jfif";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { login } from "../redux/apiCalls";
 import styled from "styled-components";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import * as YUP from "yup";
 import { large } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
@@ -91,12 +91,7 @@ const Login = () => {
   const history = useNavigate();
   const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
-
-  if (user.currentUser) {
-    console.log(user.currentUser.isAdmin); // is admin or not ?
-    if (user.currentUser.isAdmin) history("/adminHome");
-    else history("/");
-  }
+  const [loadingContent, setLoadingContent] = useState("");
 
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.user);
@@ -106,6 +101,24 @@ const Login = () => {
     email: YUP.string().required("Please Enter Email").email(),
     password: YUP.string().required("Please Enter Password"),
   });
+
+  if (user?.currentUser) {
+    console.log(user.currentUser.isAdmin); // is admin or not ?
+    if (user.currentUser.isAdmin) history("/adminHome");
+    else history("/");
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoadingContent("Server might be slow, Please wait a bit...");
+    }, 3000);
+
+    return () => {
+      setLoading(false);
+      // clearInterval(interval);
+    };
+  }, []);
+
   return (
     <Container>
       <OuterContainer>
@@ -130,17 +143,13 @@ const Login = () => {
               password: "",
             }}
             validationSchema={signInSchema}
-            onSubmit={(values, { resetForm }) => {
+            onSubmit={async (values, { resetForm }) => {
               console.log("in submit login");
               console.log(values);
               setLoading(true);
-              login(dispatch, values);
-              resetForm();
+              await login(dispatch, values);
               setLoading(false);
-
-              // setLoading(true);
-
-              resetForm(); //reset inputs after submit
+              resetForm();
             }}
           >
             {() => {
@@ -180,14 +189,22 @@ const Login = () => {
                   </Forget>
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     {loading && (
-                      <>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "8px",
+                          alignItems: "center",
+                        }}
+                      >
                         <Loader
                           type="Bars"
                           color="#adb4ec"
                           height={30}
                           width={30}
                         />
-                      </>
+                        {loadingContent.length > 0 && <p>{loadingContent}</p>}
+                      </div>
                     )}
                   </div>
                   <div className="text-center">
