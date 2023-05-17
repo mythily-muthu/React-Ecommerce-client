@@ -4,6 +4,7 @@ let initialState = {
   products: [],
   quantity: 0,
   total: 0,
+  stripeData: {}
 };
 
 export const cartReducer = (state = initialState, action) => {
@@ -22,6 +23,7 @@ export const cartReducer = (state = initialState, action) => {
         proudcts: [],
         quantity: 0,
         total: 0,
+        stripeData: action.payload,
       };
     }
     case "removeItem": {
@@ -34,6 +36,12 @@ export const cartReducer = (state = initialState, action) => {
         total: state.total - action.product.price * action.product.quantity,
       };
     }
+    // case "createOrder": {
+    //   return {
+    //     ...state,
+    //     stripeData: action.payload,
+    //   }
+    // }
 
     default:
       return state;
