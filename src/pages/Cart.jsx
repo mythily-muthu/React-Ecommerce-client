@@ -12,8 +12,10 @@ import Newsletter from "../components/Newsletter";
 import UpperAnnouncement from "../components/UpperAnnouncement";
 import { large, medium } from "../responsive";
 import { useNavigate } from "react-router";
-import { publicRequest } from "../axiosMethod";
+// import { publicRequest } from "../axiosMethod";
 import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
+import Loader from "react-loader-spinner";
 //styled comp
 const MainContainer = styled.div`
   background-color: whitesmoke;
@@ -85,17 +87,19 @@ const Cart = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [alert, setAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const onToken = (token) => {
-    console.log(token);
+    console.log("toke:", token);
     setStripeToken(token);
   };
 
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        console.log(cart.total);
-        const res = await publicRequest.post(
-          "/payment",
+        setLoading(true);
+        const res = await axios.post(
+          "https://mythu-ecommerce-app.onrender.com/checkout/payment",
           {
             tokenId: stripeToken.id,
             amount: 500,
@@ -106,13 +110,11 @@ const Cart = () => {
             },
           }
         );
-        dispatch({ type: "emptyCart" });
-        history("/success", {
-          stripeData: res.data,
-          products: cart,
-        });
+        dispatch({ type: "emptyCart", payload: res.data });
+        setLoading(false);
+        history("/success");
       } catch (err) {
-        console.log(err);
+        setLoading(false);
       }
     };
     stripeToken && makeRequest();
@@ -147,88 +149,92 @@ const Cart = () => {
             <h1>Your Bag</h1>
           </div>
         </TopButtons>
-        <Container>
-          {cart.products.length > 0 ? (
-            <>
-              <OrderContainer>
-                <CartItem />
-              </OrderContainer>
-              <SummaryContainer>
-                <div>
-                  <h3>SUMMARY</h3>
-                </div>
-                <SummaryLine>
-                  <div>SubTotal</div>
-                  <div> ${cart.total}</div>
-                </SummaryLine>
-                <SummaryLine>
-                  <div>Shipping</div>
-                  <div> $5</div>
-                </SummaryLine>
-                <SummaryLine>
-                  <div>Shipping Discount</div>
-                  <div> - $5</div>
-                </SummaryLine>
-                <SummaryLine>
-                  <div>Total</div>
-                  <div> ${cart.total}</div>
-                </SummaryLine>
+        {loading ? (
+          <Loader type="TailSpin" color="#25283D" height={100} width={100} />
+        ) : (
+          <Container>
+            {cart.products.length > 0 ? (
+              <>
+                <OrderContainer>
+                  <CartItem />
+                </OrderContainer>
+                <SummaryContainer>
+                  <div>
+                    <h3>SUMMARY</h3>
+                  </div>
+                  <SummaryLine>
+                    <div>SubTotal</div>
+                    <div> ${cart.total}</div>
+                  </SummaryLine>
+                  <SummaryLine>
+                    <div>Shipping</div>
+                    <div> $5</div>
+                  </SummaryLine>
+                  <SummaryLine>
+                    <div>Shipping Discount</div>
+                    <div> - $5</div>
+                  </SummaryLine>
+                  <SummaryLine>
+                    <div>Total</div>
+                    <div> ${cart.total}</div>
+                  </SummaryLine>
 
-                {/* stipes */}
-                <div>
-                  {user.currentUser ? (
-                    <StripeCheckout
-                      name="MakeYouUp"
-                      image="https://source.unsplash.com/yd3mg93Smn8"
-                      billingAddress
-                      shippingAddress
-                      description={`Your Cart Total is $ ${cart.total}`}
-                      amount={cart.total * 100}
-                      token={onToken}
-                      stripeKey="pk_test_51Jx2WuSG7y1nLb4U9u9WivGzguKP1yPcnIMNrkXBAs7Hi4JiHfVYbETDhDDYUsoU3ZoGh7twA468JIIvhcPgizPd00E0HW7iaS"
-                    >
-                      <Button>Checkout</Button>
-                    </StripeCheckout>
-                  ) : (
-                    <>
-                      <Button
-                        onClick={() => {
-                          setAlert(true);
-                        }}
+                  {/* stipes */}
+                  <div>
+                    {user.currentUser ? (
+                      <StripeCheckout
+                        name="MakeYouUp"
+                        image="https://source.unsplash.com/yd3mg93Smn8"
+                        billingAddress
+                        shippingAddress
+                        description={`Your Cart Total is $ ${cart.total}`}
+                        amount={cart.total * 100}
+                        token={onToken}
+                        stripeKey="pk_test_51Jx2WuSG7y1nLb4U9u9WivGzguKP1yPcnIMNrkXBAs7Hi4JiHfVYbETDhDDYUsoU3ZoGh7twA468JIIvhcPgizPd00E0HW7iaS"
                       >
-                        checkOut
-                      </Button>
-                    </>
-                  )}
-                </div>
+                        <Button>Checkout</Button>
+                      </StripeCheckout>
+                    ) : (
+                      <>
+                        <Button
+                          onClick={() => {
+                            setAlert(true);
+                          }}
+                        >
+                          checkOut
+                        </Button>
+                      </>
+                    )}
+                  </div>
 
-                <div className="text-danger my-5 ">
-                  <p className="text-center bg-info p-3 text-light">
-                    <b>IMPORTANT *</b>
-                  </p>
-                  <p>
-                    <b>Please use the below credentials to checkout</b>
-                  </p>
-                  <p>
-                    card number: <b>4242424242424242</b>
-                  </p>
-                  <p>
-                    Expiry:<b> 02/22 or any future dates </b>
-                  </p>
-                  <p>
-                    CVV: <b>222 or any three digit number</b>
-                  </p>
-                </div>
-              </SummaryContainer>
-            </>
-          ) : (
-            <>
-              <h2 style={{ textAlign: "center", width: "100%" }}>
-                Your Bag is empty
-              </h2>
-            </>
-          )}
-        </Container>
+                  <div className="text-danger my-5 ">
+                    <p className="text-center bg-info p-3 text-light">
+                      <b>IMPORTANT *</b>
+                    </p>
+                    <p>
+                      <b>Please use the below credentials to checkout</b>
+                    </p>
+                    <p>
+                      card number: <b>4242424242424242</b>
+                    </p>
+                    <p>
+                      Expiry:<b> 02/22 or any future dates </b>
+                    </p>
+                    <p>
+                      CVV: <b>222 or any three digit number</b>
+                    </p>
+                  </div>
+                </SummaryContainer>
+              </>
+            ) : (
+              <>
+                <h2 style={{ textAlign: "center", width: "100%" }}>
+                  Your Bag is empty
+                </h2>
+              </>
+            )}
+          </Container>
+        )}
         <Newsletter />
         <Footer />
       </MainContainer>

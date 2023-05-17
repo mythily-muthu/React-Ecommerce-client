@@ -52,7 +52,6 @@ const Item = styled.div`
 const AdminNav = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  console.log("user details", user);
   const history = useNavigate();
   return (
     <NavContainer>

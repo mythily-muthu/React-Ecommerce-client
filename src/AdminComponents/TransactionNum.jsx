@@ -24,7 +24,6 @@ const TransactionNum = () => {
             token: user.currentUser.token,
           },
         });
-        console.log("admin transaction ", res.data);
         setOrders(res.data);
       } catch {}
     };

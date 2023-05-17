@@ -122,14 +122,12 @@ export default function AdminUserAdd() {
                       others
                     );
 
-                    console.log(res);
                     if (res.status === 201)
                       setInfo("User Created Successfully");
                     else if (res.status === 400) setInfo("User Already Exists");
                     resetForm();
                     setLoading(false);
                   } catch (err) {
-                    console.log(err);
                     setInfo("oops something went wrong!");
                     resetForm();
                     setLoading(false);

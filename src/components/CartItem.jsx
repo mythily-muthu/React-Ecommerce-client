@@ -36,14 +36,14 @@ const DetailsContainer = styled.div`
   align-items: flex-start;
   justify-content: space-between;
 `;
-const ShadeSingle = styled.div`
-  height: 1.5rem;
-  width: 1.5rem;
-  background-color: ${(props) => props.hexValue};
-  border-radius: 50%;
-  border: 1px solid black;
-  cursor: pointer;
-`;
+// const ShadeSingle = styled.div`
+//   height: 1.5rem;
+//   width: 1.5rem;
+//   background-color: ${(props) => props.hexValue};
+//   border-radius: 50%;
+//   border: 1px solid black;
+//   cursor: pointer;
+// `;
 const QuantityContainer = styled.div`
   margin-left: auto;
 
@@ -78,13 +78,11 @@ const CartItem = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
 
-  console.log(cart);
-
   return (
     <OuterContainer>
       {cart.products.map((product, index) => {
         return (
-          <>
+          <div key={index}>
             <CartContainer>
               <ImageContainer>
                 <img
@@ -101,14 +99,14 @@ const CartItem = () => {
                 <div>
                   <p>{product.brand}</p>
                 </div>
-                {product.product_colors && (
+                {/* {product.product_colors && (
                   <div>
                     color
                     <ShadeSingle
                       hexValue={product.product_colors}
                     ></ShadeSingle>
                   </div>
-                )}
+                )} */}
               </DetailsContainer>
               <QuantityContainer>
                 <div>
@@ -137,7 +135,7 @@ const CartItem = () => {
                 </div>
               </QuantityContainer>
             </CartContainer>
-          </>
+          </div>
         );
       })}
     </OuterContainer>

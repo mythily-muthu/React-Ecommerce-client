@@ -57,7 +57,6 @@ const Products = ({ filters }) => {
       setProducts(res.data);
       setLoading(false);
     } catch (err) {
-      console.log(err);
       setLoading(false);
     }
     setLoading(false);
@@ -66,14 +65,12 @@ const Products = ({ filters }) => {
   useEffect(() => {
     let newFilters = { ...filters };
     for (let key in newFilters) {
-      console.log(key, newFilters[key]);
       if (newFilters[key].length === 0) {
         delete newFilters[key];
       } else if (Array.isArray(newFilters[key])) {
         newFilters[key] = newFilters[key].join(",");
       }
     }
-    console.log(newFilters);
     getProducts(newFilters);
   }, [filters, location]);
 

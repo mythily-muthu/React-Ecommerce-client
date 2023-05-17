@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -8,6 +8,8 @@ import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import UpperAnnouncement from "../components/UpperAnnouncement";
 import { large, medium } from "../responsive";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 //styled comp
 const MainContainer = styled.div`
@@ -49,9 +51,30 @@ const Container = styled.div`
 
 const Order = () => {
   const [loading, setLoading] = useState(false);
-  //   const [order, setOrder] = useState([]);
-  // const user=useSelector(state=>state.user)
-  console.log(setLoading);
+  const [order, setOrder] = useState([]);
+  const user = useSelector((state) => state.user);
+
+  const getOrder = async () => {
+    try {
+      const res = await axios.get(
+        `https://mythu-ecommerce-app.onrender.com/order/find/${user.currentUser._id}`,
+        {
+          headers: {
+            token: user.currentUser.token,
+          },
+        }
+      );
+      setOrder(res.data);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getOrder();
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
       <MainContainer>
@@ -74,55 +97,47 @@ const Order = () => {
           </div>
         ) : (
           <Container>
-            {/* orde.length>0? */}
-            <table className="table">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Order Id</th>
-                  <th scope="col">Products</th>
-                  <th scope="col">Shipping Address</th>
-                  <th scope="col">Order Placed</th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* {order.map((item) => { */}
-                {/* return ( */}
-                <tr>
-                  <th scope="row">
-                    {/* {item._id} */}
-                    12
-                  </th>
-                  <td>
-                    {/* {item.products.map((a) => {
+            {order.length > 0 ? (
+              <table className="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Order Id</th>
+                    <th scope="col">Products</th>
+                    <th scope="col">Shipping Address</th>
+                    <th scope="col">Order Placed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {order.map((item) => {
+                    return (
+                      <tr>
+                        <th scope="row">{item._id}</th>
+                        <td>
+                          {item.products.map((a) => {
                             return (
                               <>
                                 <span>{a.productName}</span>
                                 <br />
                               </>
                             );
-                          })} */}
-                    lipstick
-                  </td>
-                  <td>
-                    coimbatore,India
-                    {/* {item.address.city},{item.address.country} */}
-                  </td>
-                  <td>
-                    today
-                    {/* {new Date(item.createdAt).toDateString()} */}
-                  </td>
-                </tr>
-                {/* ); */}
-                {/* })} */}
-              </tbody>
-            </table>
-            {/* ) : (
+                          })}
+                        </td>
+                        <td>
+                          {item.address.city},{item.address.country}
+                        </td>
+                        <td>{new Date(item.createdAt).toDateString()}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
               <>
                 <h2 style={{ textAlign: "center", width: "100%" }}>
                   Your have not yet ordered any items
                 </h2>
               </>
-            )} */}
+            )}
           </Container>
         )}
       </MainContainer>

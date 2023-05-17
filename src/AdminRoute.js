@@ -4,7 +4,6 @@ import { Route } from "react-router";
 import Home from "./pages/Home";
 
 export default function AdminRoute({ path, component }) {
-  console.log("in AdminRoute");
   const user = useSelector((state) => state.user);
 
   return (

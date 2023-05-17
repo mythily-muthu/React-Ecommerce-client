@@ -15,7 +15,6 @@ const TableContainer = styled.div`
 const UserNum = () => {
   const user = useSelector((state) => state.user);
   const [users, setUsers] = useState([]);
-  console.log(users);
 
   useEffect(() => {
     const getUsers = async () => {
@@ -25,7 +24,6 @@ const UserNum = () => {
             token: user.currentUser.token,
           },
         });
-        console.log(res);
         setUsers(res.data);
       } catch (error) {}
     };

@@ -67,7 +67,6 @@ const AddContainer = styled.div`
 const AdminProductList = () => {
   const [products, setProducts] = useState([]);
   const user = useSelector((state) => state.user);
-  console.log("user in products", user);
   const [loading, setLoading] = useState(false);
   const getProducts = async () => {
     try {
@@ -76,9 +75,7 @@ const AdminProductList = () => {
       setProducts(res.data);
 
       setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {
@@ -91,18 +88,13 @@ const AdminProductList = () => {
 
   const handleDelete = async () => {
     try {
-      console.log("in product delete");
-      const res = await publicRequest.delete(`/product/${deleteId}`, {
+      await publicRequest.delete(`/product/${deleteId}`, {
         headers: {
           token: user.currentUser.token,
         },
       });
-      console.log(res);
       getProducts();
-    } catch (err) {
-      console.log("err in ");
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   //details

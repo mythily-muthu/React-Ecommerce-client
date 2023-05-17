@@ -4,13 +4,12 @@ let initialState = {
   products: [],
   quantity: 0,
   total: 0,
+  stripeData: {}
 };
 
 export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case "addProduct": {
-      console.log(action.payload);
-      console.log("Product state:", state);
       state.products.push(action.payload);
       return {
         ...state,
@@ -24,13 +23,12 @@ export const cartReducer = (state = initialState, action) => {
         proudcts: [],
         quantity: 0,
         total: 0,
+        stripeData: action.payload,
       };
     }
     case "removeItem": {
       let tempProd = [...state.products];
       tempProd.splice(action.itemNo, 1);
-      console.log(tempProd);
-      console.log(action.product);
       return {
         state,
         products: [...tempProd],
@@ -38,6 +36,12 @@ export const cartReducer = (state = initialState, action) => {
         total: state.total - action.product.price * action.product.quantity,
       };
     }
+    // case "createOrder": {
+    //   return {
+    //     ...state,
+    //     stripeData: action.payload,
+    //   }
+    // }
 
     default:
       return state;

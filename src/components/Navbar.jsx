@@ -111,10 +111,8 @@ const SmallerDiv = styled.div`
 
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
-  console.log("quantity", quantity);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  console.log(user);
   const history = useNavigate();
   const value = useSelector((state) => state.search.searchValue);
   const [search, setSearch] = useState(value);

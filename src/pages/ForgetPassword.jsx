@@ -106,20 +106,16 @@ const ForgetPassword = () => {
             }}
             validationSchema={forgetSchema}
             onSubmit={async (values, { resetForm }) => {
-              console.log("in submit forgot pass");
               setLoading(true);
-              console.log(values);
               try {
-                const res = await publicRequest.post("/auth/resettoken", {
+                await publicRequest.post("/auth/resettoken", {
                   email: values.email,
                 });
-                console.log(res.data);
                 setInfo("Please check Your email for activation link");
                 setLoading(false);
                 resetForm();
               } catch (err) {
                 setInfo("Email already exists");
-                console.log(err);
                 setLoading(false);
               }
             }}
