@@ -9,8 +9,6 @@ let initialState = {
 export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case "addProduct": {
-      console.log(action.payload);
-      console.log("Product state:", state);
       state.products.push(action.payload);
       return {
         ...state,
@@ -29,8 +27,6 @@ export const cartReducer = (state = initialState, action) => {
     case "removeItem": {
       let tempProd = [...state.products];
       tempProd.splice(action.itemNo, 1);
-      console.log(tempProd);
-      console.log(action.product);
       return {
         state,
         products: [...tempProd],

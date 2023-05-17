@@ -78,13 +78,11 @@ const CartItem = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
 
-  console.log(cart);
-
   return (
     <OuterContainer>
       {cart.products.map((product, index) => {
         return (
-          <>
+          <div key={index}>
             <CartContainer>
               <ImageContainer>
                 <img
@@ -137,7 +135,7 @@ const CartItem = () => {
                 </div>
               </QuantityContainer>
             </CartContainer>
-          </>
+          </div>
         );
       })}
     </OuterContainer>

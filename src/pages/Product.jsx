@@ -99,27 +99,18 @@ const Product = () => {
   const id = useParams().productId;
   //states
   let [product, setProduct] = useState({});
-  console.log("product details", product);
   const [loading, setLoading] = useState(true);
-  let [shadeIn, setShade] = React.useState("");
   let [quantity, setQuantity] = React.useState(1);
-  console.log(id);
   const dispatch = useDispatch();
   const [alert, setAlert] = useState(false);
-  const [error, setError] = useState(false);
-  console.log(error, setShade);
 
   const getProduct = async (id) => {
     try {
-      console.log("in product");
       //id getting from url params ;
       let res = await publicRequest.get(`/product/find/${id}`);
-      console.log(res);
       setProduct(res.data);
       setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -139,26 +130,22 @@ const Product = () => {
 
   //add cart
   const handleCart = () => {
-    console.log(product);
-    let product_colors = shadeIn;
-    let cartProduct = { ...product, quantity, product_colors };
-    console.log(cartProduct);
-    if (product.product_colors.length > 0) {
-      if (cartProduct.product_colors.length > 0) {
-        setAlert(true);
-        dispatch({ type: "addProduct", payload: cartProduct });
-        setError(false);
-      } else {
-        setError(true);
-      }
-    } else {
-      setAlert(true);
-      dispatch({ type: "addProduct", payload: cartProduct });
-      setError(false);
-    }
+    // let product_colors = shadeIn;
+    let cartProduct = { ...product, quantity };
+    // if (product.product_colors.length > 0) {
+    //   if (cartProduct.product_colors.length > 0) {
+    //     setAlert(true);
+    //     dispatch({ type: "addProduct", payload: cartProduct });
+    //     setError(false);
+    //   } else {
+    //     setError(true);
+    //   }
+    // } else {
+    setAlert(true);
+    dispatch({ type: "addProduct", payload: cartProduct });
+    // setError(false);
+    // }
   };
-
-  console.log("error");
 
   return (
     <>

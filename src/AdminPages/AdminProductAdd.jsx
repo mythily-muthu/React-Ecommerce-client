@@ -86,7 +86,6 @@ const Label = styled.label`
 `;
 
 export default function AdminProductAdd() {
-  console.log("in");
   const [info, setInfo] = useState("");
   const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
@@ -102,7 +101,6 @@ export default function AdminProductAdd() {
 
   // const handleImage = (product) => {
   //   setInfo("");
-  //   console.log(product);
   //   setUpload(true);
   //   setLoading(true);
   //   // const storage = getStorage(app);
@@ -120,13 +118,10 @@ export default function AdminProductAdd() {
   //   //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
   //   //     const progress =
   //   //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //   //     console.log("Upload is " + progress + "% done");
   //   //     switch (snapshot.state) {
   //   //       case "paused":
-  //   //         console.log("Upload is paused");
   //   //         break;
   //   //       case "running":
-  //   //         console.log("Upload is running");
   //   //         break;
   //   //       default:
   //   //     }
@@ -139,31 +134,26 @@ export default function AdminProductAdd() {
   //   //     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
   //   //     getDownloadURL(uploadTask.snapshot.ref)
   //   //       .then((downloadURL) => {
-  //   //         console.log("File available at", downloadURL);
   //   //         setUpload(false);
   //   //         setLink(downloadURL);
-  //   //         console.log(typeof product.product_colors);
   //   //         let colors = product.product_colors.split(",");
   //   //         const Product = {
   //   //           ...product,
   //   //           image_link: downloadURL,
   //   //           product_colors: colors,
   //   //         };
-  //   //         console.log(Product);
   //   //         const res = publicRequest.post(`/product/`, Product, {
   //   //           headers: {
   //   //             token: user.currentUser.token,
   //   //           },
   //   //         });
   //   //         res.then((output) => {
-  //   //           console.log(output);
   //   //           if (output.status === 201)
   //   //             setInfo("Product Created Successfully");
   //   //           setLoading(false);
   //   //         });
   //   //       })
   //   //       .catch((err) => {
-  //   //         console.log(err);
   //   //         setInfo("Oops Something went wrong");
   //   //         setLoading(false);
   //   //       });
@@ -171,7 +161,6 @@ export default function AdminProductAdd() {
   //   // );
   // };
   const handleSubmit = async (Product) => {
-    console.log(Product);
     setLoading(true);
     const res = await publicRequest.post(`/product/`, Product, {
       headers: {
@@ -211,7 +200,6 @@ export default function AdminProductAdd() {
                 }}
                 validationSchema={signInSchema}
                 onSubmit={async (values, { resetForm }) => {
-                  console.log(values);
                   handleSubmit(values);
                   // resetForm();
                 }}

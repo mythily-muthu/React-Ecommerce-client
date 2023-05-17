@@ -90,7 +90,7 @@ const ProductList = () => {
   let tempMin, tempMax;
 
   //initial sort
-  const [sort, setSort] = useState("");
+  // const [sort, setSort] = useState("");
 
   let tempSort = "";
 
@@ -100,30 +100,20 @@ const ProductList = () => {
     if (type === "brand") {
       let trueItems = [];
       for (let key in brand) {
-        console.log(key, brand[key]);
         if (brand[key]) trueItems.push(key);
-        console.log(trueItems);
       }
       setFilter({ ...filter, brand: trueItems });
     } else if (type === "product_type") {
-      console.log("in product type");
       let trueItems = [];
       for (let key in product_type) {
         if (product_type[key]) trueItems.push(key);
       }
-      console.log(trueItems);
       setFilter({ ...filter, product_type: trueItems });
     } else if (type === "sort") {
-      console.log(tempSort);
-
       setFilter({ ...filter, sort: tempSort });
-      console.log(sort);
-      console.log(filter);
     } else if (type === "price") {
       let price = `${tempMin},${tempMax}`;
-      // console.log(price)
       setFilter({ ...filter, price: price });
-      // console.log(filter)
     } else if (type === "name") {
       setFilter({ ...filter, name: search.searchValue });
     }
@@ -145,8 +135,6 @@ const ProductList = () => {
 
   //handle sort
   const handleSort = ({ target: { value } }) => {
-    console.log("in", value);
-    setSort(value);
     tempSort = value;
     handleFilter("sort");
   };
@@ -161,29 +149,22 @@ const ProductList = () => {
   };
 
   useEffect(() => {
-    console.log("url location", location);
     const temp = location.pathname.split("/");
-    console.log(temp);
     if (temp[2] === "brand" || temp[2] === "product_type") {
-      console.log("in product mounted");
       let event = {
         target: {
           name: temp[3],
           checked: true,
         },
       };
-      console.log(temp[2]);
       // url path is same with brand or product type:
       temp[2] === "brand" ? handleBrand(event) : handleProductType(event);
     } else if (temp[2] && temp[2] === "name") {
-      console.log("in", temp[2]);
       handleFilter("name");
     } else {
       setFilter({ ...filter, name: "" });
     }
   }, [location]);
-
-  console.log("filtered data:", filter);
 
   return (
     <MainContainer>

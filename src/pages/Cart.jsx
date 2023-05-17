@@ -86,14 +86,13 @@ const Cart = () => {
   const dispatch = useDispatch();
   const [alert, setAlert] = useState(false);
   const onToken = (token) => {
-    console.log(token);
+    console.log("toke:", token);
     setStripeToken(token);
   };
 
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        console.log(cart.total);
         const res = await publicRequest.post(
           "/payment",
           {
@@ -111,9 +110,7 @@ const Cart = () => {
           stripeData: res.data,
           products: cart,
         });
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     };
     stripeToken && makeRequest();
   }, [stripeToken]);

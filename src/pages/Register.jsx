@@ -124,16 +124,13 @@ const Register = () => {
             }}
             validationSchema={registerSchema}
             onSubmit={async (values, { resetForm }) => {
-              console.log("in submit register");
               setLoading(true);
-              console.log(values);
               try {
                 const { confirmPassword, ...other } = values;
-                const res = await axios.post(
+                await axios.post(
                   `https://mythu-ecommerce-app.onrender.com/auth/register`,
                   other
                 );
-                console.log(res);
                 setInfo(
                   "User created Successfully,Please Login with your Email/Password "
                 );

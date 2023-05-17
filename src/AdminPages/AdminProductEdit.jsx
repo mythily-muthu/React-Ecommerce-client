@@ -98,7 +98,6 @@ const AdminProductEdit = () => {
         setProduct(res.data);
         setLoading(false);
       } catch (err) {
-        console.log(err);
         setLoading(false);
       }
     };
@@ -133,26 +132,19 @@ const AdminProductEdit = () => {
                   }}
                   validationSchema={signInSchema}
                   onSubmit={async (values, { resetForm }) => {
-                    console.log(values);
                     setInfo("");
                     try {
                       setUpdateButtonLoading(true);
-                      const res = await publicRequest.put(
-                        `/product/${params.id}`,
-                        values,
-                        {
-                          headers: {
-                            token: user.currentUser.token,
-                          },
-                        }
-                      );
-                      console.log(res);
+                      await publicRequest.put(`/product/${params.id}`, values, {
+                        headers: {
+                          token: user.currentUser.token,
+                        },
+                      });
                       setUpdateButtonLoading(false);
                       setInfo("product updated Successfully");
                       resetForm();
                     } catch (err) {
                       setInfo("Oops Something wet Wrong...!");
-                      console.log(err);
                       setUpdateButtonLoading(false);
                     }
                   }}

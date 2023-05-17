@@ -13,7 +13,6 @@ const persistConfig = {
     encryptTransform({
       secretKey: "muthu@123",
       onError: function (error) {
-        console.log(error);
       },
     }),
   ],

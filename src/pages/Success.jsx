@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
 //syled comp
@@ -14,9 +14,7 @@ const Success = () => {
   const [show, setShow] = useState(true);
   const handleClose = () => setShow(false);
 
-  const location = useLocation();
   const history = useNavigate();
-  console.log(location);
 
   //demo
   const orderId = true;

@@ -77,11 +77,9 @@ const AdminUserList = () => {
           token: Puser.currentUser.token,
         },
       });
-      console.log(res.data);
       setUser(res.data);
       setLoading(false);
     } catch (err) {
-      console.log(err);
       setLoading(false);
     }
   };
@@ -113,24 +111,16 @@ const AdminUserList = () => {
                   }}
                   validationSchema={signInSchema}
                   onSubmit={async (values, { resetForm }) => {
-                    console.log(values);
-
                     try {
-                      const res = await publicRequest.put(
-                        `/users/${params.id}`,
-                        values,
-                        {
-                          headers: {
-                            token: Puser.currentUser.token,
-                          },
-                        }
-                      );
+                      await publicRequest.put(`/users/${params.id}`, values, {
+                        headers: {
+                          token: Puser.currentUser.token,
+                        },
+                      });
 
-                      console.log(res);
                       setInfo("User Updated Successfully");
                       resetForm();
                     } catch (err) {
-                      console.log(err);
                       setInfo("oops something went wrong!");
                     }
                   }}

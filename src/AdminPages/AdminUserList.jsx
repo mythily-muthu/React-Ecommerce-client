@@ -49,10 +49,8 @@ export default function AdminUserList() {
   const [users, setUsers] = useState([]);
   const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
-  console.log("user received in userlist", user);
 
   const getUsers = async () => {
-    console.log("getting user ..");
     setLoading(true);
     try {
       const res = await publicRequest.get(`/users`, {
@@ -61,11 +59,8 @@ export default function AdminUserList() {
         },
       });
       setUsers(res.data);
-      console.log(res.data);
       setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {
@@ -79,16 +74,13 @@ export default function AdminUserList() {
 
   const handleDelete = async () => {
     try {
-      const res = await publicRequest.delete(`/users/${deleteId}`, {
+      await publicRequest.delete(`/users/${deleteId}`, {
         headers: {
           token: user.currentUser.token,
         },
       });
-      console.log(res);
       getUsers();
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const columns = [

@@ -22,7 +22,6 @@ const Home = () => {
     if (user?.currentUser) {
       // is admin or not ?
       if (user?.currentUser?.isAdmin) {
-        console.log("in");
         history("/adminHome");
       } else history("/");
     }

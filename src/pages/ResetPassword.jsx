@@ -82,9 +82,6 @@ const ResetPassword = () => {
   const id = param.id;
   const token = param.token;
 
-  console.log("id: ", id);
-  console.log("token:", token);
-
   const resetSchema = YUP.object().shape({
     password: YUP.string()
       .required("Please Enter password...")
@@ -110,22 +107,18 @@ const ResetPassword = () => {
             }}
             validationSchema={resetSchema}
             onSubmit={async (values, { resetForm }) => {
-              console.log(values);
-
               try {
-                const response = await publicRequest.post(
+                await publicRequest.post(
                   `/auth/verifyAndUpdatePassword/${id}/${token}`,
                   {
                     password: values.password,
                   }
                 );
-                console.log(response);
 
                 setInfo("Please log in again with the new password");
                 resetForm();
               } catch (err) {
                 setInfo("Something went wrong");
-                console.log(err.message);
               }
             }}
           >

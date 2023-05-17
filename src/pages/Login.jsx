@@ -103,7 +103,6 @@ const Login = () => {
   });
 
   if (user?.currentUser) {
-    console.log(user.currentUser.isAdmin); // is admin or not ?
     if (user.currentUser.isAdmin) history("/adminHome");
     else history("/");
   }
@@ -144,8 +143,6 @@ const Login = () => {
             }}
             validationSchema={signInSchema}
             onSubmit={async (values, { resetForm }) => {
-              console.log("in submit login");
-              console.log(values);
               setLoading(true);
               await login(dispatch, values);
               setLoading(false);
